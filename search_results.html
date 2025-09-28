@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Поисковая выдача</title>
+</head>
+<body>
+  <header>
+    <div>
+      <a href="/" aria-label="На главную">ГОСТПоиск</a>
+    </div>
+    <form action="/" method="get" role="search">
+      <label for="search-query">Поиск</label>
+      <input id="search-query" type="search" name="text" placeholder="Найдётся всё" required>
+      <button type="submit">Найти</button>
+    </form>
+  </header>
+
+  <main>
+    <section aria-label="Результаты поиска">
+      <p>Нашлось примерно 12&nbsp;300 результатов</p>
+
+      <ol>
+        <li>
+          <article>
+            <h2><a href="https://example.com/article-1">Как верстать HTML: базовые теги и структура</a></h2>
+            <div><cite>https://example.com/article-1</cite></div>
+            <p>Пошаговое введение в разметку: от заголовков и абзацев до списков и ссылок. Примеры кода и практические советы.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h2><a href="https://example.org/guide">Руководство по семантической разметке</a></h2>
+            <div><cite>https://example.org/guide</cite></div>
+            <p>Зачем нужны семантические теги и как они помогают поисковым системам и вспомогательным технологиям.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h2><a href="https://dev.example/typography">Типографика в вебе</a></h2>
+            <div><cite>https://dev.example/typography</cite></div>
+            <p>Заголовки, абзацы, списки и цитаты: как организовать читабельный контент без лишних стилей.</p>
+          </article>
+        </li>
+        <li>
+          <article>
+            <h2><a href="https://docs.example/forms">Формы: поля, метки и доступность</a></h2>
+            <div><cite>https://docs.example/forms</cite></div>
+            <p>Правильные подписи для полей, обязательные атрибуты и базовая валидация в браузере.</p>
+          </article>
+        </li>
+      </ol>
+    </section>
+
+    <nav aria-label="Навигация по страницам">
+      <ul>
+        <li><a href="?page=1">1</a></li>
+        <li><a href="?page=2">2</a></li>
+        <li><a href="?page=3">3</a></li>
+        <li><a href="?page=4">4</a></li>
+        <li><a href="?page=5">5</a></li>
+        <li><a href="?page=2">Далее →</a></li>
+      </ul>
+    </nav>
+  </main>
+
+  <footer>
+    <p>ГОСТПоиск — экспериментальная страница для тренировки вёрстки.</p>
+  </footer>
+</body>
+</html>
