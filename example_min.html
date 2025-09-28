@@ -32,6 +32,9 @@
       color: white;
       background-color: transparent;
     }
+    [hidden] {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -43,6 +46,12 @@
       </button>
       <button class="js-pause-button control-btn" aria-label="Pause" hidden>
         <i class="fa fa-pause" aria-hidden="true"></i>
+      </button>
+      <button class="js-mute-button control-btn" aria-label="Mute">
+        <i class="fa fa-volume-off" aria-hidden="true"></i>
+      </button>
+      <button class="js-volume-button control-btn" aria-label="Unmute" hidden>
+        <i class="fa fa-volume-up" aria-hidden="true"></i>
       </button>
     </div>
   </div>
