@@ -20,6 +20,11 @@
     .controls {
       background-color: black;
       flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+    }
+    .controls-spacer {
+      flex-grow: 1;
     }
     .control-btn {
       width: 56px;
@@ -34,6 +39,9 @@
       font-size: 28px;
       margin-right: 12px;
       margin-bottom: 8px;
+    }
+    .control-btn:last-child {
+      margin-right: 0;
     }
     [hidden] {
       display: none !important;
@@ -55,6 +63,10 @@
       </button>
       <button class="js-volume-button control-btn" aria-label="Unmute" hidden>
         <i class="fa fa-volume-up" aria-hidden="true"></i>
+      </button>
+      <div class="controls-spacer"></div>
+      <button class="js-fullscreen-button control-btn" aria-label="Fullscreen">
+        <i class="fa fa-arrows-alt" aria-hidden="true"></i>
       </button>
     </div>
   </div>
