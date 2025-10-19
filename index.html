@@ -5,15 +5,30 @@
   <title>Video Player — Demo</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <style>
+    :root{
+      --ur-top: 6px;
+      --ur-right: 11px;
+      --ur-size: 11px;
+      --dl-bottom: 6px;
+      --dl-left: 1px;
+      --dl-size: 11px;
+    }
     .player{width:800px;height:600px;display:flex;flex-direction:column}
     #player{box-shadow:0 0 12px rgba(0,0,0,.6)}
     .video-container{flex-grow:1}
     .controls{background-color:#000;flex:0 0 auto;display:flex;align-items:center}
     .controls-spacer{flex-grow:1}
-    .control-btn{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border:none;cursor:pointer;color:#fff;background-color:transparent;font-size:18px;margin-right:0px;margin-bottom:8px}
-    .js-mute-button,.js-volume-button{margin-left:0px}
+    .control-btn{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border:none;cursor:pointer;color:#fff;background-color:transparent;font-size:18px;margin-right:0;margin-bottom:8px}
+    .js-mute-button{margin-left:0}
+    .js-volume-button{margin-left:0}
     .control-btn:last-child{margin-right:0}
     [hidden]{display:none!important}
+
+    /* Две диагональные стрелки с независимым позиционированием и размером */
+    .js-fullscreen-button{position:relative}
+    .js-fullscreen-button i{line-height:1;position:absolute}
+    .fs-ur{top:var(--ur-top);right:var(--ur-right);font-size:var(--ur-size);transform:rotate(45deg)}
+    .fs-dl{bottom:var(--dl-bottom);left:var(--dl-left);font-size:var(--dl-size);transform:rotate(225deg)}
   </style>
 </head>
 <body>
@@ -25,7 +40,10 @@
       <button class="js-mute-button control-btn" aria-label="Mute"><i class="fa fa-volume-off" aria-hidden="true"></i></button>
       <button class="js-volume-button control-btn" aria-label="Unmute" hidden><i class="fa fa-volume-up" aria-hidden="true"></i></button>
       <div class="controls-spacer"></div>
-      <button class="js-fullscreen-button control-btn" aria-label="Fullscreen"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
+      <button class="js-fullscreen-button control-btn" aria-label="Fullscreen">
+        <i class="fa fa-arrow-up fs-ur" aria-hidden="true"></i>
+        <i class="fa fa-arrow-up fs-dl" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
