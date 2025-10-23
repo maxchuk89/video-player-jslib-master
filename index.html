@@ -12,6 +12,14 @@
       --dl-bottom: 6px;
       --dl-left: 1px;
       --dl-size: 11px;
+      --mute-ml: 3px;
+      --mute-mr: 6px;
+      --mute-left: 2px;
+      --mute-top: 0px;
+      --vol-ml: 1px;
+      --vol-mr: 8px;
+      --vol-left: 0px;
+      --vol-top: 0px;
     }
     .player{width:800px;height:600px;display:flex;flex-direction:column}
     #player{box-shadow:0 0 12px rgba(0,0,0,.6)}
@@ -19,12 +27,14 @@
     .controls{background-color:#000;flex:0 0 auto;display:flex;align-items:center}
     .controls-spacer{flex-grow:1}
     .control-btn{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border:none;cursor:pointer;color:#fff;background-color:transparent;font-size:18px;margin-right:0;margin-bottom:8px}
-    .js-mute-button{margin-left:0}
-    .js-volume-button{margin-left:0}
+    .js-mute-button{margin-left:var(--mute-ml);margin-right:var(--mute-mr)}
+    .js-mute-button i{position:relative;left:var(--mute-left);top:var(--mute-top)}
+    .js-volume-button{margin-left:var(--vol-ml);margin-right:var(--vol-mr)}
+    .js-volume-button i{position:relative;left:var(--vol-left);top:var(--vol-top)}
     .control-btn:last-child{margin-right:0}
     [hidden]{display:none!important}
-
-    /* Две диагональные стрелки с независимым позиционированием и размером */
+    .time{color:#fff;font-size:14px;margin-left:16px;display:inline-flex;align-items:center;gap:6px}
+    .time-sep{opacity:.7}
     .js-fullscreen-button{position:relative}
     .js-fullscreen-button i{line-height:1;position:absolute}
     .fs-ur{top:var(--ur-top);right:var(--ur-right);font-size:var(--ur-size);transform:rotate(45deg)}
@@ -37,8 +47,17 @@
     <div class="controls">
       <button class="js-play-button control-btn" aria-label="Play"><i class="fa fa-play" aria-hidden="true"></i></button>
       <button class="js-pause-button control-btn" aria-label="Pause" hidden><i class="fa fa-pause" aria-hidden="true"></i></button>
-      <button class="js-mute-button control-btn" aria-label="Mute"><i class="fa fa-volume-off" aria-hidden="true"></i></button>
-      <button class="js-volume-button control-btn" aria-label="Unmute" hidden><i class="fa fa-volume-up" aria-hidden="true"></i></button>
+      <button class="js-mute-button control-btn" aria-label="Mute">
+        <i class="fa fa-volume-up" aria-hidden="true"></i>
+      </button>
+      <button class="js-volume-button control-btn" aria-label="Unmute" hidden>
+        <i class="fa fa-volume-off" aria-hidden="true"></i>
+      </button>
+      <div class="time">
+        <span class="js-current-time">00:00</span>
+        <span class="time-sep">/</span>
+        <span class="js-duration">00:00</span>
+      </div>
       <div class="controls-spacer"></div>
       <button class="js-fullscreen-button control-btn" aria-label="Fullscreen">
         <i class="fa fa-arrow-up fs-ur" aria-hidden="true"></i>
