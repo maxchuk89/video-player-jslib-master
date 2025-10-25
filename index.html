@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Video Player — Demo</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
@@ -214,7 +215,6 @@
         progress.classList.remove('dragging');
       });
 
-      // Touch support
       progress.addEventListener('touchstart', function(){
         progress.classList.add('dragging');
       }, {passive:true});
