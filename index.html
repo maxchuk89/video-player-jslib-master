@@ -24,25 +24,50 @@
       --vol-left: 0px;
       --vol-top: 0px;
 
-      --time-ml: 0px;
-      --time-mr: 5px;
-      --time-shift-x: 0px;
-      --time-shift-y: -3px;
-      --time-size: 17px;
-      --time-line-height: 0;
-      --time-width: 700px;
+      --timeL-ml: 0px;
+      --timeL-mr: 5px;
+      --timeL-shift-x: 0px;
+      --timeL-shift-y: -4px;
+      --timeL-size: 15.5px;
+      --timeL-line: 1;
 
-      --time-left-shift-x: 0px;
-      --time-left-shift-y: 0px;
-      --time-right-shift-x: -1px;
-      --time-right-shift-y: 0px;
+      --timeR-ml: 6px;
+      --timeR-mr: -1px;
+      --timeR-shift-x: 8px;
+      --timeR-shift-y: -4px;
+      --timeR-size: 15.5px;
+      --timeR-line: 1;
+
+      --progress-h: 5px;
+      --progress-radius: 2px;
+      --progress-bg: #444;
+      --progress-fill: #e53935;
+      --progress-mx: 6px;
+      --progress-my: 0px;
+      --progress-shift-x: 0px;
+      --progress-shift-y: -4px;
+
+      --progress-flex: 30;
+      --progress-width: 0px;
+
+      --knob-size: 8px;
+      --knob-border: 3px;
+      --knob-color: #ff3b30;
+      --knob-shadow: 0 0 4px rgba(0,0,0,.6);
+      --knob-offset-x: 0px;
+      --knob-offset-y: 0px;
     }
+
     .player{width:800px;height:600px;display:flex;flex-direction:column}
     #player{box-shadow:0 0 12px rgba(0,0,0,.6)}
     .video-container{flex-grow:1}
     .controls{background-color:#000;flex:0 0 auto;display:flex;align-items:center}
     .controls-spacer{flex-grow:1}
-    .control-btn{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border:none;cursor:pointer;color:#fff;background-color:transparent;font-size:18px;margin-right:0;margin-bottom:8px}
+
+    .control-btn{
+      width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;
+      border:none;cursor:pointer;color:#fff;background-color:transparent;font-size:18px;margin-right:0;margin-bottom:8px
+    }
     .js-mute-button{margin-left:var(--mute-ml);margin-right:var(--mute-mr)}
     .js-mute-button i{position:relative;left:var(--mute-left);top:var(--mute-top)}
     .js-volume-button{margin-left:var(--vol-ml);margin-right:var(--vol-mr)}
@@ -50,24 +75,49 @@
     .control-btn:last-child{margin-right:0}
     [hidden]{display:none!important}
 
-    .time{
-      color:#fff;
-      font-family:"Roboto", system-ui, -apple-system, Arial, sans-serif;
-      font-weight:300;
-      font-size:var(--time-size);
-      line-height:var(--time-line-height);
-      margin-left:var(--time-ml);
-      margin-right:var(--time-mr);
-      display:inline-flex;
-      align-items:center;
-      justify-content:space-between;
-      width:var(--time-width);
-      transform:translate(var(--time-shift-x),var(--time-shift-y))
+    .time-left-block{
+      color:#fff;font-family:"Roboto", system-ui, -apple-system, Arial, sans-serif;font-weight:300;
+      font-size:var(--timeL-size);line-height:var(--timeL-line);
+      margin-left:var(--timeL-ml);margin-right:var(--timeL-mr);
+      display:inline-flex;align-items:center;
+      transform:translate(var(--timeL-shift-x),var(--timeL-shift-y));
     }
-    .time-left{position:relative;transform:translate(var(--time-left-shift-x),var(--time-left-shift-y))}
-    .time-right{position:relative;text-align:right;transform:translate(var(--time-right-shift-x),var(--time-right-shift-y))}
 
-    .progress{flex:1 1 auto}
+    .time-right-block{
+      color:#fff;font-family:"Roboto", system-ui, -apple-system, Arial, sans-serif;font-weight:300;
+      font-size:var(--timeR-size);line-height:var(--timeR-line);
+      margin-left:var(--timeR-ml);margin-right:var(--timeR-mr);
+      display:inline-flex;align-items:center;
+      transform:translate(var(--timeR-shift-x),var(--timeR-shift-y));
+    }
+
+    .progress{
+      flex: var(--progress-flex) 1 auto;
+      display:flex;align-items:center;
+      margin: var(--progress-my) var(--progress-mx);
+      transform: translate(var(--progress-shift-x), var(--progress-shift-y));
+      min-width: 0;
+    }
+    .progress-fixed{ flex: 0 0 var(--progress-width); }
+
+    .js-progress{
+      position:relative;width:100%;height:var(--progress-h);
+      background-color:var(--progress-bg);border-radius:var(--progress-radius);
+      overflow:visible;cursor:pointer;
+    }
+    .js-progress-slider{
+      position:absolute;left:0;top:0;height:100%;width:0%;
+      background-color:var(--progress-fill);border-radius:var(--progress-radius);
+    }
+
+    .js-progress-slider::after{
+      content:"";position:absolute;right:0;top:50%;
+      width:var(--knob-size);height:var(--knob-size);
+      border:var(--knob-border) solid #fff;background:var(--knob-color);border-radius:50%;
+      box-shadow:var(--knob-shadow);
+      transform: translate(calc(50% + var(--knob-offset-x)), calc(-50% + var(--knob-offset-y)));
+      z-index:2;pointer-events:none;
+    }
 
     .js-fullscreen-button{position:relative}
     .js-fullscreen-button i{line-height:1;position:absolute}
@@ -88,14 +138,22 @@
         <i class="fa fa-volume-off" aria-hidden="true"></i>
       </button>
 
-      <div class="time">
-        <span class="js-current-time time-left">00:00</span>
-        <span class="js-duration time-right">00:00</span>
+      <div class="time-left-block">
+        <span class="js-current-time">00:00</span>
       </div>
 
-      <div class="progress"></div>
+      <div class="progress">
+        <div class="js-progress">
+          <div class="js-progress-slider"></div>
+        </div>
+      </div>
+
+      <div class="time-right-block">
+        <span class="js-duration">00:00</span>
+      </div>
 
       <div class="controls-spacer"></div>
+
       <button class="js-fullscreen-button control-btn" aria-label="Fullscreen">
         <i class="fa fa-arrow-up fs-ur" aria-hidden="true"></i>
         <i class="fa fa-arrow-up fs-dl" aria-hidden="true"></i>
@@ -105,6 +163,27 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://unpkg.com/playable@2.10.3/dist/statics/playable.bundle.min.js"></script>
   <script src="player.js"></script>
+  <script>
+    function setProgressBarLength(opts){
+      var o = opts || {};
+      var root = document.documentElement.style;
+      var bar = document.querySelector('.progress');
+      if (!bar) return;
+
+      if (typeof o.flex === 'number'){
+        root.setProperty('--progress-flex', String(o.flex));
+        bar.classList.remove('progress-fixed');
+      }
+      if (typeof o.width === 'number'){
+        root.setProperty('--progress-width', o.width + 'px');
+        bar.classList.add('progress-fixed');
+      }
+      if (typeof o.marginX === 'number'){
+        root.setProperty('--progress-mx', o.marginX + 'px');
+      }
+    }
+    window.setProgressBarLength = setProgressBarLength;
+  </script>
   <script>createPlayer({elementId:'player'});</script>
 </body>
 </html>
