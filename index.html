@@ -97,6 +97,7 @@
       margin: var(--progress-my) var(--progress-mx);
       transform: translate(var(--progress-shift-x), var(--progress-shift-y));
       min-width: 0;
+      user-select: none;
     }
     .progress-fixed{ flex: 0 0 var(--progress-width); }
 
@@ -110,13 +111,22 @@
       background-color:var(--progress-fill);border-radius:var(--progress-radius);
     }
 
+    /* По умолчанию кружок скрыт */
     .js-progress-slider::after{
       content:"";position:absolute;right:0;top:50%;
       width:var(--knob-size);height:var(--knob-size);
       border:var(--knob-border) solid #fff;background:var(--knob-color);border-radius:50%;
       box-shadow:var(--knob-shadow);
-      transform: translate(calc(50% + var(--knob-offset-x)), calc(-50% + var(--knob-offset-y)));
+      transform: translate(calc(50% + var(--knob-offset-x)), calc(-50% + var(--knob-offset-y))) scale(.92);
+      opacity:0;
       z-index:2;pointer-events:none;
+      transition: opacity 300ms ease-in, transform 300ms ease-in;
+    }
+    /* Кружок виден только когда тянем (класс .dragging) */
+    .progress.dragging .js-progress-slider::after{
+      opacity:1;
+      transform: translate(calc(50% + var(--knob-offset-x)), calc(-50% + var(--knob-offset-y))) scale(1);
+      transition: opacity 300ms ease-out, transform 300ms ease-out;
     }
 
     .js-fullscreen-button{position:relative}
@@ -183,6 +193,38 @@
       }
     }
     window.setProgressBarLength = setProgressBarLength;
+
+    (function enableProgressDragVisibility(){
+      var progress = document.querySelector('.progress');
+      if (!progress) return;
+
+      var down = false;
+      progress.addEventListener('mousedown', function(){
+        down = true;
+        progress.classList.add('dragging');
+      });
+      window.addEventListener('mouseup', function(){
+        if (!down) return;
+        down = false;
+        progress.classList.remove('dragging');
+      });
+      progress.addEventListener('mouseleave', function(){
+        if (!down) return;
+        down = false;
+        progress.classList.remove('dragging');
+      });
+
+      // Touch support
+      progress.addEventListener('touchstart', function(){
+        progress.classList.add('dragging');
+      }, {passive:true});
+      window.addEventListener('touchend', function(){
+        progress.classList.remove('dragging');
+      }, {passive:true});
+      window.addEventListener('touchcancel', function(){
+        progress.classList.remove('dragging');
+      }, {passive:true});
+    })();
   </script>
   <script>createPlayer({elementId:'player'});</script>
 </body>
