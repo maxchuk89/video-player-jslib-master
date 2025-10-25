@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <title>Video Player — Demo</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
   <style>
     :root{
       --ur-top: 6px;
@@ -12,6 +14,7 @@
       --dl-bottom: 6px;
       --dl-left: 1px;
       --dl-size: 11px;
+
       --mute-ml: 3px;
       --mute-mr: 6px;
       --mute-left: 2px;
@@ -20,6 +23,19 @@
       --vol-mr: 8px;
       --vol-left: 0px;
       --vol-top: 0px;
+
+      --time-ml: 0px;
+      --time-mr: 5px;
+      --time-shift-x: 0px;
+      --time-shift-y: -3px;
+      --time-size: 17px;
+      --time-line-height: 0;
+      --time-width: 700px;
+
+      --time-left-shift-x: 0px;
+      --time-left-shift-y: 0px;
+      --time-right-shift-x: -1px;
+      --time-right-shift-y: 0px;
     }
     .player{width:800px;height:600px;display:flex;flex-direction:column}
     #player{box-shadow:0 0 12px rgba(0,0,0,.6)}
@@ -33,8 +49,26 @@
     .js-volume-button i{position:relative;left:var(--vol-left);top:var(--vol-top)}
     .control-btn:last-child{margin-right:0}
     [hidden]{display:none!important}
-    .time{color:#fff;font-size:14px;margin-left:16px;display:inline-flex;align-items:center;gap:6px}
-    .time-sep{opacity:.7}
+
+    .time{
+      color:#fff;
+      font-family:"Roboto", system-ui, -apple-system, Arial, sans-serif;
+      font-weight:300;
+      font-size:var(--time-size);
+      line-height:var(--time-line-height);
+      margin-left:var(--time-ml);
+      margin-right:var(--time-mr);
+      display:inline-flex;
+      align-items:center;
+      justify-content:space-between;
+      width:var(--time-width);
+      transform:translate(var(--time-shift-x),var(--time-shift-y))
+    }
+    .time-left{position:relative;transform:translate(var(--time-left-shift-x),var(--time-left-shift-y))}
+    .time-right{position:relative;text-align:right;transform:translate(var(--time-right-shift-x),var(--time-right-shift-y))}
+
+    .progress{flex:1 1 auto}
+
     .js-fullscreen-button{position:relative}
     .js-fullscreen-button i{line-height:1;position:absolute}
     .fs-ur{top:var(--ur-top);right:var(--ur-right);font-size:var(--ur-size);transform:rotate(45deg)}
@@ -53,11 +87,14 @@
       <button class="js-volume-button control-btn" aria-label="Unmute" hidden>
         <i class="fa fa-volume-off" aria-hidden="true"></i>
       </button>
+
       <div class="time">
-        <span class="js-current-time">00:00</span>
-        <span class="time-sep">/</span>
-        <span class="js-duration">00:00</span>
+        <span class="js-current-time time-left">00:00</span>
+        <span class="js-duration time-right">00:00</span>
       </div>
+
+      <div class="progress"></div>
+
       <div class="controls-spacer"></div>
       <button class="js-fullscreen-button control-btn" aria-label="Fullscreen">
         <i class="fa fa-arrow-up fs-ur" aria-hidden="true"></i>
