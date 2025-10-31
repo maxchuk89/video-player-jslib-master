@@ -1,0 +1,137 @@
+:root{
+  --ur-top: 6px;
+  --ur-right: 11px;
+  --ur-size: 11px;
+  --dl-bottom: 6px;
+  --dl-left: 1px;
+  --dl-size: 11px;
+
+  --mute-ml: 3px;
+  --mute-mr: 6px;
+  --mute-left: 2px;
+  --mute-top: 0px;
+  --vol-ml: 1px;
+  --vol-mr: 8px;
+  --vol-left: 0px;
+  --vol-top: 0px;
+
+  --timeL-ml: 0px;
+  --timeL-mr: 5px;
+  --timeL-shift-x: 0px;
+  --timeL-shift-y: -4px;
+  --timeL-size: 15.5px;
+  --timeL-line: 1;
+
+  --timeR-ml: 6px;
+  --timeR-mr: -1px;
+  --timeR-shift-x: 8px;
+  --timeR-shift-y: -4px;
+  --timeR-size: 15.5px;
+  --timeR-line: 1;
+
+  --progress-h: 5px;
+  --progress-radius: 2px;
+  --progress-bg: #444;
+  --progress-fill: #e53935;
+  --progress-mx: 6px;
+  --progress-my: 0px;
+  --progress-shift-x: 0px;
+  --progress-shift-y: -4px;
+
+  --progress-flex: 30;
+  --progress-width: 0px;
+
+  --knob-size: 8px;
+  --knob-border: 3px;
+  --knob-color: #ff3b30;
+  --knob-shadow: 0 0 4px rgba(0,0,0,.6);
+  --knob-offset-x: 0px;
+  --knob-offset-y: 0px;
+}
+
+.player{width:800px;height:600px;display:flex;flex-direction:column}
+#player{box-shadow:0 0 12px rgba(0,0,0,.6)}
+.video-container{flex-grow:1}
+.controls{background-color:#000;flex:0 0 auto;display:flex;align-items:center}
+.controls-spacer{flex-grow:1}
+
+.control-btn{
+  width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;
+  border:none;cursor:pointer;color:#fff;background-color:transparent;font-size:18px;margin-right:0;margin-bottom:8px
+}
+
+/* вместо .js-mute-button / .js-volume-button — нейтральные классы */
+.btn-mute{margin-left:var(--mute-ml);margin-right:var(--mute-mr)}
+.btn-mute i{position:relative;left:var(--mute-left);top:var(--mute-top)}
+.btn-volume{margin-left:var(--vol-ml);margin-right:var(--vol-mr)}
+.btn-volume i{position:relative;left:var(--vol-left);top:var(--vol-top)}
+
+.control-btn:last-child{margin-right:0}
+[hidden]{display:none!important}
+
+.timeline{
+  flex:1 1 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  min-width:0;
+}
+
+.time-left-block{
+  color:#fff;font-family:"Roboto", system-ui, -apple-system, Arial, sans-serif;font-weight:300;
+  font-size:var(--timeL-size);line-height:var(--timeL-line);
+  margin-left:var(--timeL-ml);margin-right:var(--timeL-mr);
+  display:inline-flex;align-items:center;
+  transform:translate(var(--timeL-shift-x),var(--timeL-shift-y));
+}
+
+.time-right-block{
+  color:#fff;font-family:"Roboto", system-ui, -apple-system, Arial, sans-serif;font-weight:300;
+  font-size:var(--timeR-size);line-height:var(--timeR-line);
+  margin-left:var(--timeR-ml);margin-right:var(--timeR-mr);
+  display:inline-flex;align-items:center;
+  transform:translate(var(--timeR-shift-x),var(--timeR-shift-y));
+}
+
+/* прогресс-бар теперь нейтральные классы */
+.progress{
+  flex: var(--progress-flex) 1 auto;
+  display:flex;align-items:center;
+  margin: var(--progress-my) var(--progress-mx);
+  transform: translate(var(--progress-shift-x), var(--progress-shift-y));
+  min-width: 0;
+  user-select: none;
+}
+.progress-fixed{ flex: 0 0 var(--progress-width); }
+
+.progress__bar{
+  position:relative;width:100%;height:var(--progress-h);
+  background-color:var(--progress-bg);border-radius:var(--progress-radius);
+  overflow:visible;cursor:pointer;
+}
+.progress__fill{
+  position:absolute;left:0;top:0;height:100%;width:0%;
+  background-color:var(--progress-fill);border-radius:var(--progress-radius);
+}
+.progress__fill::after{
+  content:"";position:absolute;right:0;top:50%;
+  width:var(--knob-size);height:var(--knob-size);
+  border:var(--knob-border) solid #fff;background:var(--knob-color);border-radius:50%;
+  box-shadow:var(--knob-shadow);
+  transform: translate(calc(50% + var(--knob-offset-x)), calc(-50% + var(--knob-offset-y))) scale(.92);
+  opacity:0;
+  z-index:2;pointer-events:none;
+  transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+/* видимость кружка при перетаскивании */
+.progress.dragging .progress__fill::after{
+  opacity:1;
+  transform: translate(calc(50% + var(--knob-offset-x)), calc(-50% + var(--knob-offset-y))) scale(1);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.js-fullscreen-button{position:relative}
+.js-fullscreen-button i{line-height:1;position:absolute}
+.fs-ur{top:var(--ur-top);right:var(--ur-right);font-size:var(--ur-size);transform:rotate(45deg)}
+.fs-dl{bottom:var(--dl-bottom);left:var(--dl-left);font-size:var(--dl-size);transform:rotate(225deg)}

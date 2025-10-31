@@ -7,134 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --ur-top: 6px;
-      --ur-right: 11px;
-      --ur-size: 11px;
-      --dl-bottom: 6px;
-      --dl-left: 1px;
-      --dl-size: 11px;
-
-      --mute-ml: 3px;
-      --mute-mr: 6px;
-      --mute-left: 2px;
-      --mute-top: 0px;
-      --vol-ml: 1px;
-      --vol-mr: 8px;
-      --vol-left: 0px;
-      --vol-top: 0px;
-
-      --timeL-ml: 0px;
-      --timeL-mr: 5px;
-      --timeL-shift-x: 0px;
-      --timeL-shift-y: -4px;
-      --timeL-size: 15.5px;
-      --timeL-line: 1;
-
-      --timeR-ml: 6px;
-      --timeR-mr: -1px;
-      --timeR-shift-x: 8px;
-      --timeR-shift-y: -4px;
-      --timeR-size: 15.5px;
-      --timeR-line: 1;
-
-      --progress-h: 5px;
-      --progress-radius: 2px;
-      --progress-bg: #444;
-      --progress-fill: #e53935;
-      --progress-mx: 6px;
-      --progress-my: 0px;
-      --progress-shift-x: 0px;
-      --progress-shift-y: -4px;
-
-      --progress-flex: 30;
-      --progress-width: 0px;
-
-      --knob-size: 8px;
-      --knob-border: 3px;
-      --knob-color: #ff3b30;
-      --knob-shadow: 0 0 4px rgba(0,0,0,.6);
-      --knob-offset-x: 0px;
-      --knob-offset-y: 0px;
-    }
-
-    .player{width:800px;height:600px;display:flex;flex-direction:column}
-    #player{box-shadow:0 0 12px rgba(0,0,0,.6)}
-    .video-container{flex-grow:1}
-    .controls{background-color:#000;flex:0 0 auto;display:flex;align-items:center}
-    .controls-spacer{flex-grow:1}
-
-    .control-btn{
-      width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;
-      border:none;cursor:pointer;color:#fff;background-color:transparent;font-size:18px;margin-right:0;margin-bottom:8px
-    }
-    .js-mute-button{margin-left:var(--mute-ml);margin-right:var(--mute-mr)}
-    .js-mute-button i{position:relative;left:var(--mute-left);top:var(--mute-top)}
-    .js-volume-button{margin-left:var(--vol-ml);margin-right:var(--vol-mr)}
-    .js-volume-button i{position:relative;left:var(--vol-left);top:var(--vol-top)}
-    .control-btn:last-child{margin-right:0}
-    [hidden]{display:none!important}
-
-    .time-left-block{
-      color:#fff;font-family:"Roboto", system-ui, -apple-system, Arial, sans-serif;font-weight:300;
-      font-size:var(--timeL-size);line-height:var(--timeL-line);
-      margin-left:var(--timeL-ml);margin-right:var(--timeL-mr);
-      display:inline-flex;align-items:center;
-      transform:translate(var(--timeL-shift-x),var(--timeL-shift-y));
-    }
-
-    .time-right-block{
-      color:#fff;font-family:"Roboto", system-ui, -apple-system, Arial, sans-serif;font-weight:300;
-      font-size:var(--timeR-size);line-height:var(--timeR-line);
-      margin-left:var(--timeR-ml);margin-right:var(--timeR-mr);
-      display:inline-flex;align-items:center;
-      transform:translate(var(--timeR-shift-x),var(--timeR-shift-y));
-    }
-
-    .progress{
-      flex: var(--progress-flex) 1 auto;
-      display:flex;align-items:center;
-      margin: var(--progress-my) var(--progress-mx);
-      transform: translate(var(--progress-shift-x), var(--progress-shift-y));
-      min-width: 0;
-      user-select: none;
-    }
-    .progress-fixed{ flex: 0 0 var(--progress-width); }
-
-    .js-progress{
-      position:relative;width:100%;height:var(--progress-h);
-      background-color:var(--progress-bg);border-radius:var(--progress-radius);
-      overflow:visible;cursor:pointer;
-    }
-    .js-progress-slider{
-      position:absolute;left:0;top:0;height:100%;width:0%;
-      background-color:var(--progress-fill);border-radius:var(--progress-radius);
-    }
-
-    /* По умолчанию кружок скрыт */
-    .js-progress-slider::after{
-      content:"";position:absolute;right:0;top:50%;
-      width:var(--knob-size);height:var(--knob-size);
-      border:var(--knob-border) solid #fff;background:var(--knob-color);border-radius:50%;
-      box-shadow:var(--knob-shadow);
-      transform: translate(calc(50% + var(--knob-offset-x)), calc(-50% + var(--knob-offset-y))) scale(.92);
-      opacity:0;
-      z-index:2;pointer-events:none;
-      transition: opacity 300ms ease-in, transform 300ms ease-in;
-    }
-    /* Кружок виден только когда тянем (класс .dragging) */
-    .progress.dragging .js-progress-slider::after{
-      opacity:1;
-      transform: translate(calc(50% + var(--knob-offset-x)), calc(-50% + var(--knob-offset-y))) scale(1);
-      transition: opacity 300ms ease-out, transform 300ms ease-out;
-    }
-
-    .js-fullscreen-button{position:relative}
-    .js-fullscreen-button i{line-height:1;position:absolute}
-    .fs-ur{top:var(--ur-top);right:var(--ur-right);font-size:var(--ur-size);transform:rotate(45deg)}
-    .fs-dl{bottom:var(--dl-bottom);left:var(--dl-left);font-size:var(--dl-size);transform:rotate(225deg)}
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="player" class="player">
@@ -142,25 +15,28 @@
     <div class="controls">
       <button class="js-play-button control-btn" aria-label="Play"><i class="fa fa-play" aria-hidden="true"></i></button>
       <button class="js-pause-button control-btn" aria-label="Pause" hidden><i class="fa fa-pause" aria-hidden="true"></i></button>
-      <button class="js-mute-button control-btn" aria-label="Mute">
+
+      <button class="js-mute-button control-btn btn-mute" aria-label="Mute">
         <i class="fa fa-volume-up" aria-hidden="true"></i>
       </button>
-      <button class="js-volume-button control-btn" aria-label="Unmute" hidden>
+      <button class="js-volume-button control-btn btn-volume" aria-label="Unmute" hidden>
         <i class="fa fa-volume-off" aria-hidden="true"></i>
       </button>
 
-      <div class="time-left-block">
-        <span class="js-current-time">00:00</span>
-      </div>
-
-      <div class="progress">
-        <div class="js-progress">
-          <div class="js-progress-slider"></div>
+      <div class="timeline">
+        <div class="time-left-block">
+          <span class="js-current-time">00:00</span>
         </div>
-      </div>
 
-      <div class="time-right-block">
-        <span class="js-duration">00:00</span>
+        <div class="progress">
+          <div class="js-progress progress__bar">
+            <div class="js-progress-slider progress__fill"></div>
+          </div>
+        </div>
+
+        <div class="time-right-block">
+          <span class="js-duration">00:00</span>
+        </div>
       </div>
 
       <div class="controls-spacer"></div>
@@ -174,58 +50,7 @@
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://unpkg.com/playable@2.10.3/dist/statics/playable.bundle.min.js"></script>
   <script src="player.js"></script>
-  <script>
-    function setProgressBarLength(opts){
-      var o = opts || {};
-      var root = document.documentElement.style;
-      var bar = document.querySelector('.progress');
-      if (!bar) return;
-
-      if (typeof o.flex === 'number'){
-        root.setProperty('--progress-flex', String(o.flex));
-        bar.classList.remove('progress-fixed');
-      }
-      if (typeof o.width === 'number'){
-        root.setProperty('--progress-width', o.width + 'px');
-        bar.classList.add('progress-fixed');
-      }
-      if (typeof o.marginX === 'number'){
-        root.setProperty('--progress-mx', o.marginX + 'px');
-      }
-    }
-    window.setProgressBarLength = setProgressBarLength;
-
-    (function enableProgressDragVisibility(){
-      var progress = document.querySelector('.progress');
-      if (!progress) return;
-
-      var down = false;
-      progress.addEventListener('mousedown', function(){
-        down = true;
-        progress.classList.add('dragging');
-      });
-      window.addEventListener('mouseup', function(){
-        if (!down) return;
-        down = false;
-        progress.classList.remove('dragging');
-      });
-      progress.addEventListener('mouseleave', function(){
-        if (!down) return;
-        down = false;
-        progress.classList.remove('dragging');
-      });
-
-      progress.addEventListener('touchstart', function(){
-        progress.classList.add('dragging');
-      }, {passive:true});
-      window.addEventListener('touchend', function(){
-        progress.classList.remove('dragging');
-      }, {passive:true});
-      window.addEventListener('touchcancel', function(){
-        progress.classList.remove('dragging');
-      }, {passive:true});
-    })();
-  </script>
+  <script src="script.js"></script>
   <script>createPlayer({elementId:'player'});</script>
 </body>
 </html>
